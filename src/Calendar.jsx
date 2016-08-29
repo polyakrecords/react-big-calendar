@@ -94,6 +94,11 @@ let Calendar = React.createClass({
     onView: PropTypes.func,
 
     /**
+     * Callback fired when the `menu` toolbar button clicked.
+     */
+    handleMenuClick: PropTypes.func,
+
+    /**
      * A callback fired when a date selection is made. Only fires when `selectable` is `true`.
      *
      * ```js
@@ -324,7 +329,8 @@ let Calendar = React.createClass({
       week: PropTypes.node,
       day: PropTypes.node,
       agenda: PropTypes.node,
-      showMore: PropTypes.func
+      showMore: PropTypes.func,
+      menu: PropTypes.node
     })
   },
 
@@ -381,7 +387,10 @@ let Calendar = React.createClass({
       , className
       , elementProps
       , date: current
+      , handleMenuClick = function() {}
       , ...props } = this.props;
+
+    console.log(this.props)
 
     formats = defaultFormats(formats)
 
@@ -411,6 +420,7 @@ let Calendar = React.createClass({
             label={viewLabel(current, view, formats, culture)}
             onViewChange={this._view}
             onNavigate={this._navigate}
+            handleMenuClick={handleMenuClick}
             messages={this.props.messages}
           />
         }

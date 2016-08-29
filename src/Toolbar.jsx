@@ -6,13 +6,19 @@ import { navigate } from './utils/constants';
 let Toolbar = React.createClass({
 
   render() {
-    let { messages, label } = this.props;
+    let { messages, label, handleMenuClick } = this.props;
 
     messages = message(messages)
 
     return (
       <div className='rbc-toolbar'>
         <span className='rbc-btn-group'>
+          <button
+            type='button'
+            onClick={handleMenuClick}
+          >
+            {messages.menu}
+          </button>
           <button
             type='button'
             onClick={this.navigate.bind(null, navigate.TODAY)}
