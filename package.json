@@ -5,11 +5,10 @@
   "author": "Jason Quense <monastic.panic@gmail.com>",
   "repository": "intljusticemission/react-big-calendar",
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/index.js",
   "style": "lib/css/react-big-calendar.css",
   "files": [
-    "src/",
-    "index.js",
+    "lib/",
     "LICENSE",
     "README.md",
     "CHANGELOG.md"
