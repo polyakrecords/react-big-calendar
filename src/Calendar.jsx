@@ -390,8 +390,6 @@ let Calendar = React.createClass({
       , handleMenuClick = function() {}
       , ...props } = this.props;
 
-    console.log(this.props)
-
     formats = defaultFormats(formats)
 
     let View = this.getView();
