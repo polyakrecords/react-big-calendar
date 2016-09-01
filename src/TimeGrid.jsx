@@ -19,6 +19,8 @@ import { notify } from './utils/helpers';
 import { navigate } from './utils/constants';
 import { accessor as get } from './utils/accessors';
 
+import {Scrollbars} from 'react-custom-scrollbars';
+
 import {
   inRange, eventSegments, endOfRange
   , eventLevels, sortEvents, segStyle } from './utils/eventLevels';
@@ -145,19 +147,21 @@ export default class TimeGrid extends Component {
         {
           this.renderHeader(range, segments, width)
         }
-        <div ref='content' className='rbc-time-content'>
-          <div ref='timeIndicator' className='rbc-current-time-indicator'></div>
-          <TimeColumn
-            {...this.props}
-            showLabels
-            style={{ width }}
-            ref={gutterRef}
-            className='rbc-time-gutter'
-          />
-          {
-            this.renderEvents(range, rangeEvents, this.props.now)
-          }
-        </div>
+        <Scrollbars universal={true}>
+          <div ref='content' className='rbc-time-content'>
+            <div ref='timeIndicator' className='rbc-current-time-indicator'></div>
+            <TimeColumn
+              {...this.props}
+              showLabels
+              style={{ width }}
+              ref={gutterRef}
+              className='rbc-time-gutter'
+            />
+            {
+              this.renderEvents(range, rangeEvents, this.props.now)
+            }
+          </div>
+        </Scrollbars>
       </div>
     );
   }

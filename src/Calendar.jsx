@@ -22,8 +22,6 @@ import defaults from 'lodash/object/defaults';
 import transform from 'lodash/object/transform';
 import mapValues from 'lodash/object/mapValues';
 
-import {Scrollbars} from 'react-custom-scrollbars';
-
 function viewNames(_views){
   return !Array.isArray(_views) ? Object.keys(_views) : _views
 }
@@ -424,23 +422,21 @@ let Calendar = React.createClass({
             messages={this.props.messages}
           />
         }
-        <Scrollbars universal={true}>
-          <View
-            ref='view'
-            {...props}
-            {...formats}
-            culture={culture}
-            formats={undefined}
-            events={events}
-            date={current}
-            components={viewComponents}
-            onNavigate={this._navigate}
-            onHeaderClick={this._headerClick}
-            onSelectEvent={this._select}
-            onSelectSlot={this._selectSlot}
-            onShowMore={this._showMore}
-          />
-        </Scrollbars>
+        <View
+          ref='view'
+          {...props}
+          {...formats}
+          culture={culture}
+          formats={undefined}
+          events={events}
+          date={current}
+          components={viewComponents}
+          onNavigate={this._navigate}
+          onHeaderClick={this._headerClick}
+          onSelectEvent={this._select}
+          onSelectSlot={this._selectSlot}
+          onShowMore={this._showMore}
+        />
       </div>
     );
   },
