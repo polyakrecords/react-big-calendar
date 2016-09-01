@@ -147,7 +147,7 @@ export default class TimeGrid extends Component {
         {
           this.renderHeader(range, segments, width)
         }
-        <GenimiScrollbar forceGemini={true}>
+        <GeminiScrollbar forceGemini={true}>
           <div ref='content' className='rbc-time-content'>
             <div ref='timeIndicator' className='rbc-current-time-indicator'></div>
             <TimeColumn
@@ -161,7 +161,7 @@ export default class TimeGrid extends Component {
               this.renderEvents(range, rangeEvents, this.props.now)
             }
           </div>
-        </GenimiScrollbar>
+        </GeminiScrollbar>
       </div>
     );
   }
