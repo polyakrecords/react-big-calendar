@@ -19,7 +19,7 @@ import { notify } from './utils/helpers';
 import { navigate } from './utils/constants';
 import { accessor as get } from './utils/accessors';
 
-import {GeminiScrollbar} from 'react-gemini-scrollbar';
+import GeminiScrollbar from 'react-gemini-scrollbar';
 
 import {
   inRange, eventSegments, endOfRange
