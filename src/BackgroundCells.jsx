@@ -5,13 +5,17 @@ import { segStyle } from './utils/eventLevels';
 import { notify } from './utils/helpers';
 import { dateCellSelection, slotWidth, getCellAtX, pointInBox } from './utils/selection';
 import Selection, { getBoundsForNode } from './Selection';
+import dates from './utils/dates.js';
 
 class DisplayCells extends React.Component {
 
   static propTypes = {
     selectable: React.PropTypes.bool,
     onSelect: React.PropTypes.func,
-    slots: React.PropTypes.number
+    slots: React.PropTypes.number,
+    now: React.PropTypes.instanceOf(Date),
+    start: React.PropTypes.instanceOf(Date),
+    end: React.PropTypes.instanceOf(Date)
   }
 
   state = { selecting: false }
@@ -33,8 +37,13 @@ class DisplayCells extends React.Component {
   }
 
   render(){
-    let { slots } = this.props;
+    let { slots, now, start, end } = this.props;
     let { selecting, startIdx, endIdx } = this.state
+
+    let isNowInRange = dates.inRange(now, start, end, 'day');
+    if (isNowInRange) {
+      var nowIndex = dates.diff(start, now, 'day');
+    }
 
     let children = [];
 
@@ -44,7 +53,8 @@ class DisplayCells extends React.Component {
           key={'bg_' + i}
           style={segStyle(1, slots)}
           className={cn('rbc-day-bg', {
-            'rbc-selected-cell': selecting && i >= startIdx && i <= endIdx
+            'rbc-selected-cell': selecting && i >= startIdx && i <= endIdx,
+            'rbc-now': isNowInRange && i == nowIndex
           })}
         />
       )

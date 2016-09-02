@@ -255,6 +255,9 @@ export default class TimeGrid extends Component {
               slots={range.length}
               container={()=> this.refs.allDay}
               selectable={this.props.selectable}
+              now={this.props.now}
+              start={this.props.start}
+              end={this.props.end}
             />
             <div style={{ zIndex: 1, position: 'relative' }}>
               { this.renderAllDayEvents(range, levels) }
