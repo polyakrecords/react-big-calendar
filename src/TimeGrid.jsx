@@ -363,7 +363,7 @@ export default class TimeGrid extends Component {
       timeIndicator.style.display = 'block';
       timeIndicator.style.marginLeft = daysPassed * timeSlotWidth + timeGutter.offsetWidth + 'px';
       timeIndicator.style.top = offset + 'px';
-      timeIndicator.style.width = timeSlotWidth;
+      timeIndicator.style.width = timeSlotWidth + 'px';
     } else {
       timeIndicator.style.display = 'none';
     }
