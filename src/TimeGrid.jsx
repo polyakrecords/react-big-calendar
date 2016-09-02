@@ -269,12 +269,17 @@ export default class TimeGrid extends Component {
   }
 
   renderHeaderCells(range){
-    let { dayFormat, culture } = this.props;
+    let { dayFormat, culture, now, start, end } = this.props;
+
+    let isNowInRange = dates.inRange(now, start, end, 'day');
+    if (isNowInRange) {
+      var nowIndex = dates.diff(start, now, 'day');
+    }
 
     return range.map((date, i) =>
       <div
         key={i}
-        className='rbc-header'
+        className={cn('rbc-header', {'rbc-now': isNowInRange && i == nowIndex})}
         style={segStyle(1, this._slots)}
       >
         <a href='#' onClick={this._headerClick.bind(null, date)}>
