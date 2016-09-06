@@ -355,15 +355,18 @@ export default class TimeGrid extends Component {
     const timeGutter = this._gutters[this._gutters.length - 1];
 
     let timeSlotWidth = (this.refs.content.offsetWidth - timeGutter.offsetWidth) / 7;
+    let timeSlotWidthPercentage = 100 * timeSlotWidth / this.refs.content.offsetWidth;
+    let gutterWidthPercentage = 100 * timeGutter.offsetWidth / this.refs.content.offsetWidth;
+
 
     if (timeGutter && now >= start && now <= end) {
       const pixelHeight = timeGutter.offsetHeight;
       const offset = Math.floor(factor * pixelHeight);
 
       timeIndicator.style.display = 'block';
-      timeIndicator.style.marginLeft = daysPassed * timeSlotWidth + timeGutter.offsetWidth + 'px';
+      timeIndicator.style.marginLeft = daysPassed * timeSlotWidthPercentage + gutterWidthPercentage + '%';
       timeIndicator.style.top = offset + 'px';
-      timeIndicator.style.width = timeSlotWidth + 'px';
+      timeIndicator.style.width = timeSlotWidthPercentage + '%';
     } else {
       timeIndicator.style.display = 'none';
     }
