@@ -69,10 +69,14 @@ let DaySlot = React.createClass({
   componentDidMount() {
     this.props.selectable
     && this._selectable()
+
+    this.positionTimeIndicator();
+    this.triggerTimeIndicatorUpdate();
   },
 
   componentWillUnmount() {
     this._teardownSelectable();
+    window.clearTimeout(this._timeIndicatorTimeout);
   },
 
   componentWillReceiveProps(nextProps) {
@@ -80,6 +84,39 @@ let DaySlot = React.createClass({
       this._selectable();
     if (!nextProps.selectable && this.props.selectable)
       this._teardownSelectable();
+  },
+
+  positionTimeIndicator() {
+    const {min, max, start, end, date} = this.props
+    const now = new Date();
+
+    const secondsGrid = dates.diff(max, min, 'seconds');
+    const secondsPassed = dates.diff(now, min, 'seconds');
+    const daysPassed = dates.diff(start, now, 'day');
+
+    const timeIndicator = this.refs.timeIndicator;
+    const factor = secondsPassed / secondsGrid;
+
+    if (now >= start && now <= end && dates.eq(date, now, 'day')) {
+      // const pixelHeight = timeGutter.offsetHeight;
+      const offset = Math.floor(100 * factor);
+
+      timeIndicator.style.display = 'block';
+      // timeIndicator.style.left = daysPassed * timeSlotWidthPercentage + gutterWidthPercentage + '%';
+      timeIndicator.style.top = offset + '%';
+      // timeIndicator.style.width = timeSlotWidthPercentage + '%';
+    } else {
+      timeIndicator.style.display = 'none';
+    }
+  },
+
+  triggerTimeIndicatorUpdate() {
+    // Update the position of the time indicator every minute
+    this._timeIndicatorTimeout = window.setTimeout(() => {
+      this.positionTimeIndicator();
+
+      this.triggerTimeIndicatorUpdate();
+    }, 60000)
   },
 
   render() {
@@ -112,6 +149,7 @@ let DaySlot = React.createClass({
         max={max}
         step={step}
       >
+        <div ref='timeIndicator' className='rbc-current-time-indicator'></div>
         {this.renderEvents()}
         {
           selecting &&

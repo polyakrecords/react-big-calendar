@@ -76,13 +76,6 @@ export default class TimeGrid extends Component {
       this.measureGutter()
     }
     this.applyScroll();
-
-    this.positionTimeIndicator();
-    this.triggerTimeIndicatorUpdate();
-  }
-
-  componentWillUnmount() {
-    window.clearTimeout(this._timeIndicatorTimeout);
   }
 
   componentDidUpdate() {
@@ -91,8 +84,6 @@ export default class TimeGrid extends Component {
     }
 
     this.applyScroll();
-    this.positionTimeIndicator();
-    //this.checkOverflow()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -149,7 +140,6 @@ export default class TimeGrid extends Component {
         }
         <GeminiScrollbar forceGemini={true}>
           <div ref='content' className='rbc-time-content'>
-            <div ref='timeIndicator' className='rbc-current-time-indicator'></div>
             <TimeColumn
               {...this.props}
               showLabels
@@ -341,44 +331,4 @@ export default class TimeGrid extends Component {
       })
     }
   }
-
-  positionTimeIndicator() {
-    const {min, max, start, end} = this.props
-    const now = new Date();
-
-    const secondsGrid = dates.diff(max, min, 'seconds');
-    const secondsPassed = dates.diff(now, min, 'seconds');
-    const daysPassed = dates.diff(start, now, 'day');
-
-    const timeIndicator = this.refs.timeIndicator;
-    const factor = secondsPassed / secondsGrid;
-    const timeGutter = this._gutters[this._gutters.length - 1];
-
-    let timeSlotWidth = (this.refs.content.offsetWidth - timeGutter.offsetWidth) / 7;
-    let timeSlotWidthPercentage = 100 * timeSlotWidth / this.refs.content.offsetWidth;
-    let gutterWidthPercentage = 100 * timeGutter.offsetWidth / this.refs.content.offsetWidth;
-
-
-    if (timeGutter && now >= start && now <= end) {
-      const pixelHeight = timeGutter.offsetHeight;
-      const offset = Math.floor(factor * pixelHeight);
-
-      timeIndicator.style.display = 'block';
-      timeIndicator.style.marginLeft = daysPassed * timeSlotWidthPercentage + gutterWidthPercentage + '%';
-      timeIndicator.style.top = offset + 'px';
-      timeIndicator.style.width = timeSlotWidthPercentage + '%';
-    } else {
-      timeIndicator.style.display = 'none';
-    }
-  }
-
-  triggerTimeIndicatorUpdate() {
-    // Update the position of the time indicator every minute
-    this._timeIndicatorTimeout = window.setTimeout(() => {
-      this.positionTimeIndicator();
-
-      this.triggerTimeIndicatorUpdate();
-    }, 60000)
-  }
-
 }
