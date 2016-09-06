@@ -356,7 +356,7 @@ export default class TimeGrid extends Component {
 
     let timeSlotWidth = (this.refs.content.offsetWidth - timeGutter.offsetWidth) / 7;
 
-    if (timeGutter && now >= min && now <= max) {
+    if (timeGutter && now >= start && now <= end) {
       const pixelHeight = timeGutter.offsetHeight;
       const offset = Math.floor(factor * pixelHeight);
 
